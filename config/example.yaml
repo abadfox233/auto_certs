@@ -1,0 +1,14 @@
+account:
+  email: test@gmail.com
+  keyType: RSA2048
+
+domains:
+  - 'example.example.com'
+  - 'abc.example.com'
+
+dnsResolves:
+  - 'vip2.alidns.com'
+storePath: /root/auto_certs/store
+accessKey: xxxxxxxxxxxxxxx
+secretKey: xxxxxxxxxxxxxxxxxxxxx
+caDirUrl: https://acme-v02.api.letsencrypt.org/directory
