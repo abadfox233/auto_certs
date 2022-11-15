@@ -93,6 +93,8 @@ func (p *ApiSixCertProcessor) Process(cert *certificate.Resource) error {
 			oldIds = append(oldIds, nodeValue.Vale.Id)
 		}
 	}
+	// 设置启用证书
+	ssl.Status = 1
 	// 更新证书
 	if p.createApiSixSSL(ssl) != nil {
 		return err
@@ -118,7 +120,7 @@ func (p *ApiSixCertProcessor)deleteApiSixSSL(id string) error {
 		log.Printf("删除旧证书失败: %v", rsp.String())
 		return errors.New(rsp.String())
 	}
-	log.Printf("删除旧证书成功: %v", rsp.String())
+	log.Print("删除旧证书成功: " )
 	return nil
 }
 
@@ -131,7 +133,7 @@ func (p *ApiSixCertProcessor)createApiSixSSL(ssl *apisix.SSL) error {
 		return err
 	}
 	if rsp.IsSuccess() {
-		log.Printf("创建证书成功: %+v", rsp)
+		log.Print("创建证书成功: ")
 		return nil
 	}
 	log.Printf("创建证书失败: %+v", rsp)

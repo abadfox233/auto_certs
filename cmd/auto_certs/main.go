@@ -26,12 +26,19 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	r, obtainErr := legoService.Obtain(configVal.Domains...)
+	certResources, obtainErr := legoService.Obtain(configVal.Domains...)
 	if obtainErr != nil {
 		log.Fatalf("Error obtaining certificate: %v", obtainErr)
 	}
-	process := localFileProcessor.Process(r)
-	if process != nil {
-		log.Fatalf("process error: %v", process)
+	processErr := localFileProcessor.Process(certResources)
+	if processErr != nil {
+		log.Fatalf("process error: %v", processErr)
+	}
+	for _, apisixConfig := range configVal.ApiSix {
+		apisixProcess := service.NewApiSixProcessor(apisixConfig.Url, apisixConfig.Headers)
+		apiSixProcessErr := apisixProcess.Process(certResources)
+		if apiSixProcessErr != nil {
+			log.Printf("apisix process error: %v", apiSixProcessErr)
+		}
 	}
 }

@@ -3,8 +3,7 @@ account:
   keyType: RSA2048
 
 domains:
-  - 'example.example.com'
-  - 'abc.example.com'
+  - '*.example.com'
 
 dnsResolves:
   - 'vip2.alidns.com'
