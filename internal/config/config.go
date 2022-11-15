@@ -14,12 +14,18 @@ type AutoCertConfig struct {
 	StorePath   string        `mapstructure:"storePath"`
 	AccessKey   string        `mapstructure:"accessKey"`
 	SecretKey   string        `mapstructure:"secretKey"`
-	CADirURL   string        `mapstructure:"caDirUrl"`
+	CADirURL    string        `mapstructure:"caDirUrl"`
+	ApiSix      []ApiSixConfig  `mapstructure:"apisix"`
 }
 
 type AccountConfig struct {
 	Email   string `mapstructure:"email"`
 	KeyType string `mapstructure:"keyType"`
+}
+
+type ApiSixConfig struct {
+	Url     string            `mapstructure:"url"`
+	Headers map[string]string `mapstructure:"headers"`
 }
 
 func InitConfig(configPath string) *AutoCertConfig {

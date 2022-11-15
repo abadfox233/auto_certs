@@ -2,8 +2,10 @@ package main
 
 import (
 	"flag"
+	"log"
 
 	"auto_certs/internal/config"
+	"auto_certs/internal/resource"
 	"auto_certs/internal/service"
 )
 
@@ -17,11 +19,19 @@ func init() {
 func main() {
 
 	configVal := config.InitConfig(configPath)
+	resource.AutoCertConfig = configVal
 	account := service.NewUser(*configVal)
-	legoService, err:= service.NewLegoService(*configVal, account, &service.LocalFileCertProcessor{})
+	localFileProcessor := service.NewLocalFileProcessor(configVal.StorePath)
+	legoService, err := service.NewLegoService(*configVal, account)
 	if err != nil {
 		panic(err)
 	}
-	legoService.ProcessAfterObtain(configVal.Domains...)
-
+	r, obtainErr := legoService.Obtain(configVal.Domains...)
+	if obtainErr != nil {
+		log.Fatalf("Error obtaining certificate: %v", obtainErr)
+	}
+	process := localFileProcessor.Process(r)
+	if process != nil {
+		log.Fatalf("process error: %v", process)
+	}
 }

@@ -12,3 +12,9 @@ storePath: /root/auto_certs/store
 accessKey: xxxxxxxxxxxxxxx
 secretKey: xxxxxxxxxxxxxxxxxxxxx
 caDirUrl: https://acme-v02.api.letsencrypt.org/directory
+
+apisix:
+
+  - url: https://zz/apisix/admin/ssl
+    headers:
+      X-API-KEY: 'ddddddddddddd'

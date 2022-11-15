@@ -1,0 +1,4 @@
+GET http://tencent.big.ironblog.cn/apisix/admin/ssl
+ROUTE: APISIX-ADMIN
+X-API-KEY: edd1c9f972dzindhjsukznkd142z33s1
+Content-Type: application/json

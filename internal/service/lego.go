@@ -26,13 +26,12 @@ const (
 type LegoService struct {
 	CADirURL string
 	client   *lego.Client
-	CertProcessor CertProcessor
+
 }
 
-func NewLegoService(config config.AutoCertConfig, account *LegoAccount, processor CertProcessor) (*LegoService, error) {
+func NewLegoService(config config.AutoCertConfig, account *LegoAccount) (*LegoService, error) {
 	service := &LegoService{
 		CADirURL: config.CADirURL,
-		CertProcessor: processor,
 	}
 	legoConfig := lego.NewConfig(account)
 	legoConfig.CADirURL = config.CADirURL
@@ -77,13 +76,7 @@ func NewLegoService(config config.AutoCertConfig, account *LegoAccount, processo
 	return service, nil
 }
 
-func (legoService *LegoService) ProcessAfterObtain(domains ...string) error {
-	certificates, err := legoService.Obtain(domains...)
-	if err != nil {
-		return err
-	}
-	return legoService.CertProcessor.Process(certificates)
-}
+
 
 func (legoService *LegoService) Obtain(domains ...string) (*certificate.Resource, error) {
 
